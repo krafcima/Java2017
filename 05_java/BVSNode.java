@@ -23,19 +23,18 @@ public class BVSNode<E extends Comparable<E> & Clonable> implements Clonable {
 	 	 clone.right = (right != null)?right.copy():null;
 	     return clone;
      }   
-     public BVSNode<E> insert (E k) {
- 	  if (k.compareTo(key) < 0)
- 	    if (left == null)
-  	      left = new BVSNode<E>(k);
-   	    else
-  		  left = left.insert(k);
-  	  else
-  	    if (right == null)
-  	      right = new BVSNode<E>(k);
-  	    else 
-  		  right = right.insert(k);
-  	  return this;
-    }
+	public void insert(E k) {
+		if (k.compareTo(key) < 0)
+			if (left == null)
+				left = new BVSNode<E>(k);
+			else
+				left.insert(k);
+		else if (k.compareTo(key) > 0) 
+			if (right == null)
+				right = new BVSNode<E>(k);
+			else
+				right.insert(k);
+	}
     @Override
     public String toString() {
     	String res = "";

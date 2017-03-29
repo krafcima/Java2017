@@ -24,9 +24,10 @@ public class BVSTree<E extends Comparable<E> & Clonable>  implements Clonable {
      }   
     
     public void insert(E x) {
-	  root=(root == null)?
-			  new BVSNode<E>(x):
-			  root.insert (x);
+		if (root == null)
+			root = new BVSNode<E>(x);
+		else
+			root.insert(x);
     }
     @Override
     public String toString() {
