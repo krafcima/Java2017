@@ -76,6 +76,8 @@ public class BVSTree<E extends Comparable<E> & Clonable>  implements Clonable {
           s.insert(new Hruska(r.nextInt(19)));
        System.out.println(s);
    	   BVSTree<Hruska> ss = (BVSTree<Hruska>)s.copy();
+   	   System.out.println("NULL".compareTo("NULLOVA"));
+   	   System.out.println("NULLXAVER".compareTo("NULLOVAMATILDA"));
    	   //ss.copy();
       
       /*
