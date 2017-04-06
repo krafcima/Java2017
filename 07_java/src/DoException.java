@@ -16,13 +16,10 @@ public class DoException {
 	} catch (Exception12 e12) {
 	    System.out.println("Exception 12");
 	    return;
-	} 
-	//finally 
-	//finally 
+	} // finally  
 	{
 	    System.out.println("finally"); 
 	}
     System.out.println("totally");
   }
-
 }
