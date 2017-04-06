@@ -1,34 +1,47 @@
-import java.util.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
-public class BVSNode<E extends Comparable<E>> {
+public class BVSNode<E extends Comparable<E> & Clonable> implements Clonable {
 	BVSNode<E> left;
     E key; 
     BVSNode<E> right;
+	static int allInstances = 0;
+	private int instanceIndex;
     
     BVSNode(E theKey) {
+		instanceIndex = allInstances++;
+		System.out.println("create BVSNode " + instanceIndex);
         key = theKey;
         left = right = null;
     }
-     public BVSNode<E> insert (E k) {
- 	  if (k.compareTo(key) < 0)
- 	    if (left == null)
-  	      left = new BVSNode<E>(k);
-   	    else
-  		  left = left.insert(k);
-  	  else
-  	    if (right == null)
-  	      right = new BVSNode<E>(k);
-  	    else 
-  		  right = right.insert(k);
-  	  return this;
-    }
-    public void print () {
-    	System.out.println ("<" + key + ":" + "> - <" + (left == null ? "x" : "" + left.key) + ">, <" + (right == null ? "x" : "" + right.key) + ">");
-    	if (left != null) left.print ();
-    	if (right != null) right.print ();
-        }
-    public String toString(){
-    	return "";  // cvicenie 6
+	public BVSNode<E> copy()  {
+	   	 System.out.println("copy BVSNode " + instanceIndex);
+	   	 BVSNode<E> clone = new BVSNode<E>((key!=null)?(E)(key.copy()):null);
+	   	 clone.left = (left != null)?left.copy():null;
+	 	 clone.right = (right != null)?right.copy():null;
+	     return clone;
+     }   
+	public void insert(E k) {
+		if (k.compareTo(key) < 0)
+			if (left == null)
+				left = new BVSNode<E>(k);
+			else
+				left.insert(k);
+		else if (k.compareTo(key) > 0) 
+			if (right == null)
+				right = new BVSNode<E>(k);
+			else
+				right.insert(k);
+	}
+    @Override
+    public String toString() {
+    	String res = "";
+    	res =  "<key:" + key + ":" + "> - <" + (left == null ? "x" : "left:" + left.key) + ">, <" + (right == null ? "x" : "right:" + right.key) + ">\n";
+    	if (left != null) res += left;
+    	if (right != null) res += right;
+    	return res;
     }
     public Object[] toArray() {
     	Object[] p = new Object[10]; 

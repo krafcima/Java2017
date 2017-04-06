@@ -1,26 +1,37 @@
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BVSTree<E extends Comparable<E>>  {
+public class BVSTree<E extends Comparable<E> & Clonable>  implements Clonable {
     BVSNode<E> root;
+	static int allInstances = 0;
+	private int instanceIndex;
 
     public BVSTree () {
+	  instanceIndex = allInstances++;
+	  System.out.println("create BVSTree " + instanceIndex);
  	  root = null;
     }
     public BVSTree (E x) {
 	  this();
 	  insert(x);
     }
+	public BVSTree<E> copy()  {
+	   	 System.out.println("copy BVSTree " + instanceIndex);
+	   	 BVSTree<E> clone = new BVSTree<E>();
+	   	 clone.root = (root != null)?root.copy():null;
+	     return clone;
+     }   
+    
     public void insert(E x) {
-	  root=(root == null)?
-			  new BVSNode<E>(x):
-			  root.insert (x);
+		if (root == null)
+			root = new BVSNode<E>(x);
+		else
+			root.insert(x);
     }
-    public void print () {
-	  root.print ();
-    }
-    public String toString(){
-    	return "";  // cvicenie 6
+    @Override
+    public String toString() {
+	  return root.toString();
     }
     public Object[] toArray() {
     	return root.toArray();
@@ -60,6 +71,17 @@ public class BVSTree<E extends Comparable<E>>  {
     }
     
     public static void main (String args[]) {
+      BVSTree<Hruska> s = new BVSTree<Hruska>();
+      Random r = new Random();
+      for(int i=0; i<5; i++)
+          s.insert(new Hruska(r.nextInt(19)));
+       System.out.println(s);
+   	   BVSTree<Hruska> ss = (BVSTree<Hruska>)s.copy();
+   	   System.out.println("NULL".compareTo("NULLOVA"));
+   	   System.out.println("NULLXAVER".compareTo("NULLOVAMATILDA"));
+   	   //ss.copy();
+      
+      /*
       BVSTree<Integer> s = new BVSTree<Integer>();
       Random r = new Random();
       for(int i=0; i<11; i++)
@@ -77,6 +99,7 @@ public class BVSTree<E extends Comparable<E>>  {
       
       ArrayList<Integer> al = s.toList();
       System.out.println(al);
+      */
       }
 }
 
